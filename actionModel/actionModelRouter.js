@@ -2,13 +2,13 @@ const express = require('express');
 
 const dbAction = require('../data/helpers/actionModel.js');
 
-const {getProjectActions} = require('../data/helpers/projectModel.js');
-
 const router = express.Router();
  
+
+
 router.get('/:id', (req, res) => {
     const {id} = req.params;
-    getProjectActions(id)
+    dbAction.get(id)
     .then(action => {
         res.status(200).json(action)
     })
@@ -16,6 +16,17 @@ router.get('/:id', (req, res) => {
         res.status(404).json({message: 'Action not found', error: error})
     })
 })
+
+router.get('/', (req, res) => {
+    dbAction.get()
+    .then(action => {
+        res.status(200).json(action)
+    })
+    .catch (error => {
+        res.status(404).json({message: 'Action not found', error: error})
+    })
+})
+
 
 router.post('/', (req, res) => {
     const newAction = req.body;

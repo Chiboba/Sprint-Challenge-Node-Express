@@ -9,5 +9,5 @@ module.exports = (server) => {
     server.use(helmet());
     server.use(morgan('short'));
     server.use('/api/project', projectRouter);
-    server.use('/api/project/action', actionRouter);
+    server.use('/api/action', actionRouter);
 }

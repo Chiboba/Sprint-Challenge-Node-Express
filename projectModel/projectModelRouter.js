@@ -15,6 +15,27 @@ router.get('/:id', (req, res) => {
     })
 })
 
+router.get('/', (req, res) => {
+    dbProject.get()
+    .then(project => {
+        res.status(200).json(project)
+    })
+    .catch (error => {
+        res.status(404).json({message: 'Project not found', error: error})
+    })
+})
+
+router.get('/actions/:id', (req, res) => {
+    const {id} = req.params;
+    dbProject.getProjectActions(id)
+    .then(action => {
+        res.status(200).json(action)
+    })
+    .catch (error => {
+        res.status(404).json({message: 'Actions not found', error: error})
+    })
+})
+
 router.post('/', (req, res) => {
     const newProject = req.body;
     if (newProject.name.length > 128) {
